@@ -153,7 +153,7 @@ define deploy::file (
       exec { "download_${file}":
         command     => "${fetch} ${fetch_options} -O ${deploy::tempdir}/${file} ${url}/${file}",
         creates     => "${deploy::tempdir}/${file}",
-        unless      => "test -d ${target}",
+        unless      => "test -d ${target}/${file}",
         timeout     => $download_timout,
         environment => $env,
         require     => [Class['deploy'], File[$deploy::tempdir],],
