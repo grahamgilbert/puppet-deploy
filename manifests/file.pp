@@ -86,6 +86,7 @@
 define deploy::file (
   $target,
   $url,
+  $created_file,
   $command         = undef,
   $command_options = undef,
   $fetch           = '/usr/bin/wget',
@@ -153,7 +154,7 @@ define deploy::file (
       exec { "download_${file}":
         command     => "${fetch} ${fetch_options} -O ${deploy::tempdir}/${file} ${url}/${file}",
         creates     => "${deploy::tempdir}/${file}",
-        unless      => "test -d ${target}/${file}",
+        unless      => "test -d ${target}/${created_file}",
         timeout     => $download_timout,
         environment => $env,
         require     => [Class['deploy'], File[$deploy::tempdir],],
